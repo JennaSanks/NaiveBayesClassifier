@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Naive Bayes Message Classifier</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 60px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1769aa;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 160px;
+            resize: vertical;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #1769aa;
+        }
+
+        textarea::placeholder {
+            color: #999;
+        }
+
+        .button-area {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        button {
+            background: #1769aa;
+            color: white;
+            border: none;
+            padding: 13px 40px;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d568d;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            background: #e8f7ed;
+            color: #218838;
+        }
+
+        .result h2 {
+            margin-top: 0;
+        }
+
+        .message-display {
+            background: #f4f4f4;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            color: #444;
+            word-wrap: break-word;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            background: #fdeaea;
+            color: #c62828;
+            border-radius: 7px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            margin-top: 25px;
+            font-size: 13px;
+        }
+
+        .example {
+            margin-top: 25px;
+            padding: 15px;
+            background: #eef5fb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .example strong {
+            color: #1769aa;
+        }
+
+        @media(max-width: 600px) {
+
+            .container {
+                width: 95%;
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Naive Bayes Message Classifier</h1>
+
+        <div class="subtitle">
+            Classify messages as Important or Promotional
+        </div>
+
+
+        <form action="/predict" method="POST">
+
+            <label for="message">
+                Enter your message
+            </label>
+
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Example: Congratulations! You won a free laptop. Claim it now!"
+                required>{{ message if message else "" }}</textarea>
+
+
+            <div class="button-area">
+
+                <button type="submit">
+                    Predict
+                </button>
+
+            </div>
+
+        </form>
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        {% if prediction %}
+
+        <div class="result">
+
+            <h2>Prediction: {{ prediction }}</h2>
+
+            <div class="message-display">
+                <strong>Message:</strong><br>
+                {{ message }}
+            </div>
+
+            <p>
+                <strong>Confidence:</strong>
+                {{ confidence }}%
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="example">
+
+            <strong>Example messages:</strong>
+
+            <br><br>
+
+            <b>Promotional:</b>
+            "Congratulations! You won a free smartphone. Claim it now."
+
+            <br><br>
+
+            <b>Important:</b>
+            "The Machine Learning lecture is scheduled for 11 AM tomorrow."
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Naive Bayes Text Classification |
+        TF-IDF + Multinomial Naive Bayes
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
